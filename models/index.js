@@ -1,3 +1,3 @@
 module.exports = {
-  Course: require('./Course')
+  Favorite: require('./Favorite')
 }

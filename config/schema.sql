@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS handlebars_intro_db;
-CREATE DATABASE handlebars_intro_db;
+DROP DATABASE IF EXISTS starwars_example_db;
+CREATE DATABASE starwars_example_db;

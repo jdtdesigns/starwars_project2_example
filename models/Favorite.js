@@ -1,16 +1,16 @@
 const { Model, DataTypes } = require('sequelize');
 const db = require('../config/connection');
 
-class Course extends Model { }
+class Favorite extends Model { }
 
-Course.init({
-  title: {
+Favorite.init({
+  character_name: {
     type: DataTypes.STRING,
     allowNull: false
   }
 }, {
   sequelize: db,
-  modelName: 'course'
+  modelName: 'favorite'
 });
 
-module.exports = Course;
+module.exports = Favorite;

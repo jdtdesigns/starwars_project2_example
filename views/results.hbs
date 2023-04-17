@@ -1,0 +1,22 @@
+<h1 class="header-text">Search Results</h1>
+
+<div class="results">
+  {{#if characters}}
+    {{#each characters}}
+      <div class="result">
+        <h3>{{this.name}}</h3>
+        <form action="/favorite" method="POST">
+          <input type="hidden" name="character_name" value="{{this.name}}">
+          {{#if this.favorited}}
+            <button disabled>Saved</button>
+            {{else}}
+            <button>Save Character To Favorites</button>
+          {{/if}}
+        </form>
+      </div>
+    {{/each}}
+
+    {{else}}
+    <p class="no-results">No characters found matching your search.</p>
+  {{/if}}
+</div>

@@ -1,0 +1,30 @@
+<h1 class="header-text">Your Favorites</h1>
+
+{{#if favs}}
+<table class="fav-table">
+  <thead>
+    <th>Character Name</th>
+    <th></th>
+  </thead>
+  <tbody>
+    {{#each favs}}
+    <tr>
+      <td>
+        <h3>{{this.character_name}}</h3>
+      </td>
+      <td>
+        <form action="/remove/{{this.id}}" method="POST">
+          <button>Remove Favorite</button>
+        </form>
+      </td>
+    </tr>
+    {{/each}}
+
+
+  </tbody>
+</table>
+
+
+{{else}}
+<p class="no-results">No favorites have been added.</p>
+{{/if}}

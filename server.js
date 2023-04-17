@@ -18,6 +18,6 @@ app.set('views', './views');
 
 app.use('/', view_routes);
 
-db.sync().then(() => {
+db.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Server started on port %s', PORT))
 });
