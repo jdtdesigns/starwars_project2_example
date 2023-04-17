@@ -1,9 +1,10 @@
 const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
 const connection = new Sequelize(
-  'module_13_overview',
-  'root',
-  '',
+  process.env.DB_NAME,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD,
   {
     host: 'localhost',
     dialect: 'mysql'
