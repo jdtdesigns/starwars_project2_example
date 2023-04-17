@@ -1,2 +1,12 @@
 <!-- Output userName into an h1 -->
-<h1>{{userName}}</h1>
+
+<form action="/courses" method="POST">
+  <input name="title" type="text" placeholder="Type your course name">
+  <button>Submit</button>
+</form>
+
+<ul class="course-list">
+  {{#each courses}}
+    <li>ID: {{this.id}} {{this.title}} - Created On: {{this.createdAt}}</li>
+  {{/each}}
+</ul>

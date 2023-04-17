@@ -1,0 +1,11 @@
+.course-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  list-style: none;
+  gap: 10px;
+}
+
+.course-list li {
+  border: 1px solid #777;
+  padding: 10px;
+}
