@@ -1,12 +1,23 @@
 const express = require('express');
 const PORT = process.env.PORT || 3000;
-const api_routes = require('./routes/api_routes');
+const api_routes = require('./controllers/api_routes');
+const view_routes = require('./controllers/view_routes');
 const db = require('./config/connection');
+const { engine } = require('express-handlebars');
 
 const app = express();
 
 app.use(express.json());
+app.use(express.static('public'));
 
+app.engine('hbs', engine({
+  extname: '.hbs',
+  allowProtoMethodsByDefault: true
+}));
+app.set('view engine', 'hbs');
+app.set('views', './views');
+
+app.use('/', view_routes);
 app.use('/api', api_routes);
 
 db.sync().then(() => {
