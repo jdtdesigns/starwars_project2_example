@@ -1,21 +1,10 @@
 const router = require('express').Router();
-const { Course, Student, Tutor } = require('../models');
+const { Course } = require('../models');
 
 router.get('/', async (req, res) => {
-  let courses = await Course.findAll({
-    include: Student
-  });
+  // Render Index Template and pass it a userName value with a student name
 
-  // courses = [...courses];
-
-  res.render('index', {
-    userName: 'JD',
-    courses: courses
-  });
 });
 
-router.get('/about', (req, res) => {
-  res.render('about');
-});
 
 module.exports = router;

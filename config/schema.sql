@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS module_13_overview;
-CREATE DATABASE module_13_overview;
+DROP DATABASE IF EXISTS handlebars_intro_db;
+CREATE DATABASE handlebars_intro_db;
