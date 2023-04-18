@@ -1,11 +1,9 @@
 <h1 class="header-text">Login</h1>
 
 <form class="form-standard" action="/auth/login" method="POST">
-  {{#if auth_error}}
-    {{#each auth_error}}
-      <p class="auth-error">{{this}}</p>
-    {{/each}}
-  {{/if}}
+  {{#each auth_error}}
+    <p class="auth-error">{{this}}</p>
+  {{/each}}
   <input name="email" type="email" placeholder="Enter your email" required>
   <input name="password" type="password" placeholder="Enter your password" required>
   <button>Submit</button>
