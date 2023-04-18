@@ -1,15 +1,34 @@
 const router = require('express').Router();
-const { Favorite } = require('../models');
+const { Favorite, User } = require('../models');
 const axios = require('axios');
+
+function authenticate(req, res, next) {
+  if (!req.session.user) {
+    return res.redirect('/auth/login');
+  }
+
+  next();
+}
 
 // Show the homepage
 router.get('/', async (req, res) => {
-  res.render('index');
+  if (req.user) {
+    return res.redirect('/favorites');
+  }
+
+  res.render('index', {
+    homepage: true
+  });
 });
 
-// Show the add favorite page
-router.get('/search', (req, res) => {
-  res.render('search');
+// Show the search page
+router.get('/search', authenticate, async (req, res) => {
+  const user = await User.findByPk(req.session.user);
+
+  res.render('search', {
+    user: { email: user.email },
+    isSearch: true
+  });
 });
 
 // Show the search results page
@@ -18,8 +37,14 @@ router.post('/search', async (req, res) => {
   const baseURL = 'https://swapi.dev/api/people';
 
   const response = await axios.get(`${baseURL}?search=${search}`);
+  const user = await User.findOne({
+    include: Favorite,
+    where: {
+      id: req.session.user
+    }
+  });
+  const favs = user.favorites;
   let characters = response.data.results;
-  const favs = await Favorite.findAll();
 
   characters = characters.map(char => {
     const faved = favs.find(f => f.character_name === char.name);
@@ -30,25 +55,44 @@ router.post('/search', async (req, res) => {
     }
   });
 
-  res.render('results', { characters: characters });
+  res.render('results', {
+    characters,
+    user: {
+      email: user.email
+    }
+  });
 });
 
-// Store favorite route
-router.post('/favorite', async (req, res) => {
-  await Favorite.create(req.body);
+// Save a favorite
+router.post('/favorite', authenticate, async (req, res) => {
+  const user = await User.findByPk(req.session.user);
+
+  await user.createFavorite(req.body);
 
   res.redirect('/favorites');
 })
 
-// Show the search page
-router.get('/favorites', async (req, res) => {
-  const favs = await Favorite.findAll({
-    raw: true
+// Show the favorites page
+router.get('/favorites', authenticate, async (req, res) => {
+  let user = await User.findOne({
+    include: Favorite,
+    where: {
+      id: req.session.user
+    }
   });
 
-  res.render('favorites', { favs: favs });
+  let favs = user.favorites.length && user.favorites;
+
+  res.render('favorites', {
+    favs,
+    user: {
+      email: user.email
+    },
+    isFavorites: true
+  });
 });
 
+// Remove favorite
 router.post('/remove/:fav_id', async (req, res) => {
   await Favorite.destroy({
     where: {

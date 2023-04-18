@@ -4,16 +4,21 @@
   font-family: sans-serif;
 }
 
-form.search {
+form.form-standard {
   width: 400px;
   display: flex;
   flex-direction: column;
   margin: 35px auto 0;
 }
 
-form.search > * {
+form.form-standard > * {
   padding: 7px 10px;
   margin-bottom: 8px;
+}
+
+form .auth-error {
+  color: red;
+  text-align: center;
 }
 
 .header-text {
@@ -33,12 +38,26 @@ header * {
   color: #fff;
 }
 
-header nav a {
+header a {
   text-decoration: none;
 }
 
+header nav {
+  display: flex;
+}
+
+header nav p {
+  margin-right: 10px;
+  color: #ddd;
+}
+
+header nav p:after {
+  content: '|';
+  margin-left: 10px;
+}
+
 header nav a:not(:last-child) {
-  margin-right: 7px;
+  margin-right: 16px;
 }
 
 header nav a:hover {
