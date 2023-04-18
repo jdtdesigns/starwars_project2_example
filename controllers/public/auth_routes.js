@@ -1,20 +1,8 @@
 const router = require('express').Router();
-const { User } = require('../models');
-
-// Login View
-router.get('/auth/login', (req, res) => {
-  if (req.user) {
-    return res.redirect('/favorites');
-  }
-
-  res.render('auth/login', {
-    auth_error: req.session.auth_error,
-    isLogin: true
-  });
-});
+const { User } = require('../../models');
 
 // Log user in
-router.post('/auth/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({
@@ -40,15 +28,8 @@ router.post('/auth/login', async (req, res) => {
   res.redirect('/favorites');
 });
 
-// Register View
-router.get('/auth/register', (req, res) => {
-  if (req.user) return res.redirect('/favorites');
-
-  res.render('auth/register', { auth_error: req.session.auth_error });
-});
-
 // Register User
-router.post('/auth/register', async (req, res) => {
+router.post('/register', async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -64,7 +45,7 @@ router.post('/auth/register', async (req, res) => {
 });
 
 // Logout User
-router.get('/auth/logout', (req, res) => {
+router.get('/logout', (req, res) => {
   req.session.destroy();
 
   res.redirect('/');

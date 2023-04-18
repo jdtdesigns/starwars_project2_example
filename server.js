@@ -2,8 +2,8 @@ const express = require('express');
 const { engine } = require('express-handlebars');
 const session = require('express-session');
 const PORT = process.env.PORT || 3000;
-const view_routes = require('./controllers/view_routes');
-const auth_routes = require('./controllers/auth_routes');
+const private_routes = require('./controllers/private');
+const public_routes = require('./controllers/public');
 const db = require('./config/connection');
 
 const app = express();
@@ -28,7 +28,8 @@ app.engine('hbs', engine({
 app.set('view engine', 'hbs');
 app.set('views', './views');
 
-app.use('/', [view_routes, auth_routes]);
+// Load all routes
+app.use('/', [private_routes, public_routes]);
 
 db.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Server started on port %s', PORT))
